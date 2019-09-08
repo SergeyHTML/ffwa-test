@@ -1,0 +1,117 @@
+// Variables
+//
+
+$img-src: '/images/';
+$slick-loader-path: $img-src;
+$font-src: 'assets/fonts/';
+
+$transition-link-2: all 0.2s ease-out;
+$transition-link-4: all 0.4s ease-out;
+
+$transition-in: .3s cubic-bezier(0.215, 0.61, 0.355, 1);
+$transition-out: .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+$transition-easing: cubic-bezier(0.215, 0.61, 0.355, 1);
+
+$transition-timing: cubic-bezier(0.215, 0.61, 0.355, 1);
+
+@mixin _assert-ascending($map, $map-name) {
+  $prev-key: null;
+  $prev-num: null;
+  @each $key, $num in $map {
+    @if $prev-num == null {
+      // Do nothing
+    } @else if not comparable($prev-num, $num) {
+      @warn "Potentially invalid value for #{$map-name}: This map must be in ascending order, but key '#{$key}' has value #{$num} whose unit makes it incomparable to #{$prev-num}, the value of the previous key '#{$prev-key}' !";
+    } @else if $prev-num >= $num {
+      @warn "Invalid value for #{$map-name}: This map must be in ascending order, but key '#{$key}' has value #{$num} which isn't greater than #{$prev-num}, the value of the previous key '#{$prev-key}' !";
+    }
+    $prev-key: $key;
+    $prev-num: $num;
+  }
+}
+
+// General variable structure
+//
+// Variable format should follow the `$component-modifier-state-property` order.
+
+// Spacing
+//
+// Control the default styling of most Bootstrap elements by modifying these
+// variables. Mostly focused on spacing.
+// You can add more entries to the $spacers map, should you need more variation.
+
+$spacer: 1rem !default;
+$spacer-x: $spacer !default;
+$spacer-y: $spacer !default;
+$spacers: (
+        0: (
+                x: 0,
+                y: 0
+        ),
+        1: (
+                x: $spacer-x,
+                y: $spacer-y
+        ),
+        2: (
+                x: ($spacer-x * 1.5),
+                y: ($spacer-y * 1.5)
+        ),
+        3: (
+                x: ($spacer-x * 3),
+                y: ($spacer-y * 3)
+        )
+) !default;
+$border-width: 1px !default;
+
+// Grid breakpoints
+//
+// Define the minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries.
+
+$screen-xs: 0;
+$screen-xm: 544px;
+$screen-sm: 768px;
+$screen-md: 992px;
+$screen-lg: 1280px;
+$screen-xl: 1640px;
+
+$grid-breakpoints: (
+        xs: $screen-xs,
+        xm: $screen-xm,
+        sm: $screen-sm,
+        md: $screen-md,
+        lg: $screen-lg,
+        xl: $screen-xl
+) !default;
+@include _assert-ascending($grid-breakpoints, "$grid-breakpoints");
+
+// Grid containers
+//
+// Define the maximum width of `.container` for different screen sizes.
+
+$container-max-widths: (
+        xm: 500px,
+        sm: 720px,
+        md: 940px,
+        lg: 1210px,
+        xl: 1400px
+) !default;
+@include _assert-ascending($container-max-widths, "$container-max-widths");
+
+// Grid columns
+//
+// Set the number of columns and specify the width of the gutters.
+
+$grid-columns: 12 !default;
+$grid-gutter-width: 30px !default;
+
+$enable-flex: false !default;
+$enable-rounded: true !default;
+$enable-shadows: false !default;
+$enable-gradients: false !default;
+$enable-transitions: false !default;
+$enable-hover-media-query: false !default;
+$enable-grid-classes: true !default;
+$enable-print-styles: true !default;
+
